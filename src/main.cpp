@@ -8,10 +8,9 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 */
 
 #include "raylib.h"
-
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
-
 #include "trigonometry.h"
+#include "vector_scene.h"
 
 int main ()
 {
@@ -27,7 +26,8 @@ int main ()
 	// Load a texture from the resources directory
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
 
-	Scene* scene = new TrigonometryScene("Trigonometry", 1280, 720);
+	//Scene* scene = new TrigonometryScene("Trigonometry", 1280, 720);
+	Scene* scene = new VectorScene("Vector", 1280, 720);
 	scene->Initialize();	// initialize the scene
 	
 	// game loop
