@@ -2,10 +2,13 @@
 #include "body.h"
 #include "raymath.h"
 #include "mathutils.h"
+#include "raygui.h"
+#include "world.h"
+#include "gravitation.h"
 
 // Uncomment only one of these at a time
-//#define FIREWORK_BURST
-#define FIREWORK_RING
+#define FIREWORK_BURST
+//#define FIREWORK_RING
 //#define FIREWORK_CONE
 
 
@@ -15,14 +18,6 @@ void VectorScene::Initialize()
 	m_world = new World();
 	m_world->Initialize();
 	Body* body = new Body(Vector2{ 3,0 }, Vector2{ 0 }, 0.25f, WHITE);
-	m_head = body;
-	m_player = body;
-	for (int i = 0; i < 10; i++) {
-
-		body->next = new Body(Vector2{ randomf() * 5, randomf() * 5 }, Vector2{ 0 }, 0.25f, RED);
-		body->next->prev = body;
-		body = body->next;
-	}
 }
 
 void VectorScene::Update()
@@ -38,6 +33,7 @@ void VectorScene::Update()
 			float theta = randomf(0, 2 * PI);
 			Vector2 dir = { cosf(theta), sinf(theta) };
 			body->velocity = dir * randomf(1, 6);
+			body->restitution = randomf(0.5f, 1.0f);
 		}
 #endif
 
@@ -48,6 +44,7 @@ void VectorScene::Update()
 			Vector2 dir = { cosf(angle), sinf(angle) };
 			Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
 			body->velocity = dir * randomf(2, 5);
+			body->restitution = randomf(0.5f, 1.0f);
 		}
 #endif
 
@@ -93,7 +90,34 @@ void VectorScene::Update()
 	}
 	*/
 #endif
-	m_world->Step(dt);
+
+	//apply collison
+	for (auto body : m_world->GetBodies()) {
+		if (body->position.y < -5)
+		{
+			body->position.y = -5;
+			body->velocity.y *= -body->restitution;
+
+		}
+		if (body->position.x < -9) {
+			body->position.x = -9;
+			body->velocity.x *= -body->restitution;
+		}
+		if (body->position.x > 9)
+		{
+			body->position.x = 9;
+			body->velocity.x *= -body->restitution;
+		}
+	}
+}
+
+void VectorScene::FixedUpdate()
+{
+	ApplyGravitation(m_world->GetBodies(), 0.15f);
+
+	//apply forces
+	m_world->Step(Scene::fixedTimeStep);
+
 }
 
 void VectorScene::Draw()
@@ -119,4 +143,17 @@ void VectorScene::Draw()
 
 void VectorScene::DrawGUI()
 {
+	if (PhysicsWindowBoxActive)
+	{
+		PhysicsWindowBoxActive = !GuiWindowBox(Rectangle { anchor01.x + 0, anchor01.y + 0, 176, 368 }, "Phsyics");
+		GuiLabel(Rectangle { anchor01.x + 32, anchor01.y + 24, 120, 24 }, "Physics Controller");
+		GuiLine(Rectangle { anchor01.x + 0, anchor01.y + 40, 176, 12 }, NULL);
+		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 56, 120, 16 }, "Gravity", NULL, & World::gravity.y, -20, 20);
+		GuiSlider(Rectangle {anchor01.x + 48, anchor01.y + 90, 120, 16 }, "Mass", NULL, & MassSliderValue, 0, 100);
+		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 120, 120, 16 }, "Size", NULL, & SizeSliderValue, 0.1f, 5.0f);
+		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 152, 120, 16 }, "Damping", NULL, & DampingSliderValue, 0, 100);
+		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 184, 120, 16 }, "Force", NULL, & GravitationalForceSliderValue, 0, 100);
+		GuiLabel(Rectangle { anchor01.x + 7, anchor01.y + 216, 56, 24 }, "Body Type");
+		if (GuiDropdownBox(Rectangle { anchor01.x + 72, anchor01.y + 216, 96, 24 }, "Dynamic;Static;Kinematic", & BodyTypeDropdownBoxActive, BodyTypeDropdownBoxEditMode)) BodyTypeDropdownBoxEditMode = !BodyTypeDropdownBoxEditMode;
+	}
 }

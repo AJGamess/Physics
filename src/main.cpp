@@ -29,13 +29,25 @@ int main ()
 	//Scene* scene = new TrigonometryScene("Trigonometry", 1280, 720);
 	Scene* scene = new VectorScene("Vector", 1280, 720);
 	scene->Initialize();	// initialize the scene
+
+	// Set the target FPS to 60
+	SetTargetFPS(60);
+
+	float timeAccum = 0.0f;
 	
 	// game loop
 	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
 		scene->Update();	// update the game state
+		timeAccum += GetFrameTime();	// get the time since the last frame
+		while (timeAccum >= Scene::fixedTimeStep)	// fixed time step for physics
+		{
+			scene->FixedUpdate();
+			timeAccum -= Scene::fixedTimeStep;
+		}
 		scene->BeginDraw();	// start drawing
 		scene->Draw();	// draw the game state
+		scene->DrawGUI();	// draw the GUI
 		scene->EndDraw();	// end drawing
 
 	}

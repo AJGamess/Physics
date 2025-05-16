@@ -1,6 +1,8 @@
 #include "world.h"
 #include "body.h"
 
+Vector2 World::gravity{ 0, -9.81f };
+
 World::~World()
 {
 }
@@ -23,6 +25,7 @@ void World::Step(float timestep)
 	for (auto body : m_bodies)
 	{
 		body->Step(timestep);
+		body->ClearForce();
 	}
 }
 

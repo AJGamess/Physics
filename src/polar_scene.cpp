@@ -8,6 +8,10 @@ void PolarScene::Update()
 {
 }
 
+void PolarScene::FixedUpdate()
+{
+}
+
 void PolarScene::Draw()
 {
 }

@@ -15,9 +15,18 @@ public:
 	// Inherited via Scene
 	void Initialize() override;
 	void Update() override;
+	void FixedUpdate() override;
 	void Draw() override;
 	void DrawGUI() override;
 private:
-	struct Body* m_head{ nullptr };
-	struct Body* m_player{ nullptr };
+	Vector2 anchor01 = { 88, 64 };
+
+	bool PhysicsWindowBoxActive = true;
+	float GravitySliderValue = 0.0f;
+	float MassSliderValue = 0.0f;
+	float SizeSliderValue = 0.0f;
+	float DampingSliderValue = 0.0f;
+	float GravitationalForceSliderValue = 0.0f;
+	bool BodyTypeDropdownBoxEditMode = false;
+	int BodyTypeDropdownBoxActive = 0;
 };

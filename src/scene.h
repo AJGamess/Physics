@@ -1,7 +1,6 @@
 #pragma once
 #include "raylib.h"
 #include "scene_camera.h"
-#include "world.h"
 #include <string>
 
 class Scene
@@ -12,6 +11,7 @@ public:
 
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
+	virtual void FixedUpdate() = 0;
 
 	virtual void BeginDraw();
 	virtual void EndDraw();
@@ -22,6 +22,8 @@ public:
 
 	void SetCamera(SceneCamera* camera) { m_camera = camera; }
 	SceneCamera* GetCamera() { return m_camera; }
+
+	static constexpr float fixedTimeStep{ 1.0f / 60.0f };
 	
 	friend struct Body;
 
@@ -37,5 +39,5 @@ protected:
 	Color m_background{ WHITE };
 
 	SceneCamera* m_camera{ nullptr };
-	World* m_world{ nullptr };
+	class World* m_world{ nullptr };
 };
