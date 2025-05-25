@@ -3,10 +3,10 @@
 
 struct Body;
 
-class VectorScene : public Scene
+class SpringScene : public Scene
 {
 public:
-	VectorScene(const std::string& title, int width, int height, const Color& background = BLACK) :
+	SpringScene(const std::string& title, int width, int height, const Color& background = BLACK) :
 		Scene(title, width, height, background)
 	{
 		//
@@ -19,5 +19,6 @@ public:
 	void Draw() override;
 	void DrawGUI() override;
 private:
-
+	Body* m_selected{ nullptr };
+	Body* m_connected{ nullptr };
 };

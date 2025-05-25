@@ -11,6 +11,7 @@ by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit h
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
 #include "trigonometry.h"
 #include "vector_scene.h"
+#include "spring_scene.h"
 
 int main ()
 {
@@ -27,11 +28,8 @@ int main ()
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
 
 	//Scene* scene = new TrigonometryScene("Trigonometry", 1280, 720);
-	Scene* scene = new VectorScene("Vector", 1280, 720);
+	Scene* scene = new SpringScene("Spring", 1280, 720);
 	scene->Initialize();	// initialize the scene
-
-	// Set the target FPS to 60
-	SetTargetFPS(60);
 
 	float timeAccum = 0.0f;
 	
@@ -39,7 +37,7 @@ int main ()
 	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
 		scene->Update();	// update the game state
-		timeAccum += GetFrameTime();	// get the time since the last frame
+		timeAccum += std::min(GetFrameTime(), 0.5f);	// get the time since the last frame
 		while (timeAccum >= Scene::fixedTimeStep)	// fixed time step for physics
 		{
 			scene->FixedUpdate();

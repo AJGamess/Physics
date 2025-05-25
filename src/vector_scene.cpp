@@ -1,4 +1,5 @@
 #include "vector_scene.h"
+#include "gui.h"
 #include "body.h"
 #include "raymath.h"
 #include "mathutils.h"
@@ -23,10 +24,11 @@ void VectorScene::Initialize()
 void VectorScene::Update()
 {
 	float dt = GetFrameTime();
+	GUI::Update();
 
-	if (IsMouseButtonPressed(0)) {
+	if (!GUI::mouseOverGUI && IsMouseButtonPressed(0)) {
 		Vector2 position = m_camera->ScreenToWorld(GetMousePosition());
-
+		Body::Type type = (Body::Type)GUI::bodyTypeActive;
 #ifdef FIREWORK_BURST
 		for (int i = 0; i < 100; i++) {
 			Body* body = m_world->CreateBody(position, 0.05f, ColorFromHSV(randomf(360), 1, 1));
@@ -113,7 +115,7 @@ void VectorScene::Update()
 
 void VectorScene::FixedUpdate()
 {
-	ApplyGravitation(m_world->GetBodies(), 0.15f);
+	
 
 	//apply forces
 	m_world->Step(Scene::fixedTimeStep);
@@ -143,17 +145,5 @@ void VectorScene::Draw()
 
 void VectorScene::DrawGUI()
 {
-	if (PhysicsWindowBoxActive)
-	{
-		PhysicsWindowBoxActive = !GuiWindowBox(Rectangle { anchor01.x + 0, anchor01.y + 0, 176, 368 }, "Phsyics");
-		GuiLabel(Rectangle { anchor01.x + 32, anchor01.y + 24, 120, 24 }, "Physics Controller");
-		GuiLine(Rectangle { anchor01.x + 0, anchor01.y + 40, 176, 12 }, NULL);
-		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 56, 120, 16 }, "Gravity", NULL, & World::gravity.y, -20, 20);
-		GuiSlider(Rectangle {anchor01.x + 48, anchor01.y + 90, 120, 16 }, "Mass", NULL, & MassSliderValue, 0, 100);
-		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 120, 120, 16 }, "Size", NULL, & SizeSliderValue, 0.1f, 5.0f);
-		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 152, 120, 16 }, "Damping", NULL, & DampingSliderValue, 0, 100);
-		GuiSlider(Rectangle { anchor01.x + 48, anchor01.y + 184, 120, 16 }, "Force", NULL, & GravitationalForceSliderValue, 0, 100);
-		GuiLabel(Rectangle { anchor01.x + 7, anchor01.y + 216, 56, 24 }, "Body Type");
-		if (GuiDropdownBox(Rectangle { anchor01.x + 72, anchor01.y + 216, 96, 24 }, "Dynamic;Static;Kinematic", & BodyTypeDropdownBoxActive, BodyTypeDropdownBoxEditMode)) BodyTypeDropdownBoxEditMode = !BodyTypeDropdownBoxEditMode;
-	}
+	GUI::Draw();
 }

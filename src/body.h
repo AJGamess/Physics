@@ -6,9 +6,9 @@ struct Body
 public:
 	enum class Type 
 	{
-		Static,
 		Dynamic,
-		Kinematic
+		Kinematic,
+		Static
 	};
 public:
 	Body() = default;	

@@ -51,6 +51,11 @@ void Scene::DrawCircle(const Vector2& world, float radius,const Color& color) co
 	DrawCircleV(m_camera->WorldToScreen(world), m_camera->WorldToScreen(radius), color);
 }
 
+void Scene::DrawCircleLines(const Vector2& world, float radius, const Color& color, int pixels) const
+{
+	DrawCircleLinesV(m_camera->WorldToScreen(world), m_camera->WorldToScreen(radius) + pixels, color);
+}
+
 void Scene::DrawLine(const Vector2& v1, const Vector2& v2, float thickness, const Color& color) const
 {
 	DrawLineEx(m_camera->WorldToScreen(v1), m_camera->WorldToScreen(v2), thickness, color);

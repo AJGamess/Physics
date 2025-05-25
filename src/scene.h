@@ -27,10 +27,10 @@ public:
 	
 	friend struct Body;
 
-protected:
 	void DrawGrid(float slices, float thickness, const Color& color) const;
 	virtual void DrawText(const std::string& text, const Vector2& world, int fontSize, const Color& color) const;
-	virtual void DrawCircle(const Vector2& world, float radius, const Color& color) const ;
+	virtual void DrawCircle(const Vector2& world, float radius, const Color& color) const;
+	virtual void DrawCircleLines(const Vector2& world, float radius, const Color& color, int pixels = 0) const;
 	virtual void DrawLine(const Vector2& v1, const Vector2& v2, float thickness, const Color& color) const;
 
 protected:
