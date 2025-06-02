@@ -30,7 +30,7 @@ void Spring::ApplyForce(float kMultiplier)
     bodyB->ApplyForce(Vector2Negate(force));
 }
 
-void Spring::ApplyForce(const Vector2& position, Body& body, float restLength, float k, float damping)
+void Spring::ApplyForce(const Vector2& position, Body& body, float restLength, float k)
 {
     // direction = position <——— bodyB
     Vector2 direction = position - body.position;
@@ -45,11 +45,7 @@ void Spring::ApplyForce(const Vector2& position, Body& body, float restLength, f
     Vector2 ndirection = direction / length;
     Vector2 force = ndirection * forceMagnitude;
 
-    // damp spring force to prevent oscillation
-    float dampFactor = Vector2DotProduct(body.velocity, ndirection) * damping;
-    Vector2 dampingForce = ndirection * dampFactor;
-
-    body.ApplyForce(force - dampingForce);
+    body.ApplyForce(Vector2Negate(force));
 }
 
 void Spring::Draw(const Scene& scene)
