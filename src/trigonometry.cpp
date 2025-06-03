@@ -18,6 +18,7 @@ float RadToDeg(float radians)
 {
 	return radians * (180.0f / PI);
 }
+/*
 float Vector2Length(const Vector2& v)
 {
 	return sqrtf((v.x * v.x) + (v.y * v.y));
@@ -29,6 +30,7 @@ Vector2 Vector2Normalize(const Vector2& v)
 	if (l == 0) return Vector2{ 0,0 };
 	return Vector2{ v.x / l, v.y / l };
 }
+*/
 void TrigonometryScene::Draw()
 {
 	m_camera->BeginMode();

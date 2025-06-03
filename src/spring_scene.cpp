@@ -84,6 +84,42 @@ void SpringScene::Update()
 			body->velocity.x *= -body->restitution;
 		}
 	}
+
+	for (auto body : m_world->GetBodies())
+	{
+		AABB aabb = body->GetAABB();
+		AABB worldAABB = m_camera->GetAABB();
+
+		if ((aabb.min().y) < worldAABB.min().y)
+		{
+			float overlap = (worldAABB.min().y - aabb.min().y); // calculate how far the body has penetrated beyond the world boundary
+			body->position.y += 2 * overlap; // move the body back inside the world bounds
+			body->velocity.y *= -body->restitution; // multiple by -restituion to scale and flip velocity
+		}
+		else if ((aabb.max().y) > worldAABB.max().y)
+		{
+			float overlap = (worldAABB.max().y - aabb.max().y);  // calculate how far the body has penetrated beyond the world boundary
+			body->position.y += 2 * overlap; // move the body back inside the world bounds
+			body->velocity.y *= -body->restitution; // multiple by -restituion to scale and flip velocity
+		}
+
+		if ((aabb.min().x) < worldAABB.min().x)
+		{
+			//<update x>
+			float overlap = (worldAABB.min().x - aabb.min().x); // calculate how far the body has penetrated beyond the world boundary
+			body->position.x += 2 * overlap; // move the body back inside the world bounds
+			body->velocity.x *= -body->restitution; // multiple by -restituion to scale and flip velocity
+
+		}
+		else if (aabb.max().x > worldAABB.max().x)
+		{
+			//<update x>
+			float overlap = (worldAABB.max().x - aabb.max().x); // calculate how far the body has penetrated beyond the world boundary
+			body->position.x += 2 * overlap; // move the body back inside the world bounds
+			body->velocity.x *= -body->restitution; // multiple by -restituion to scale and flip velocity
+
+		}
+	}
 }
 
 void SpringScene::FixedUpdate()
