@@ -69,3 +69,28 @@ bool Collision::Intersects(Body* bodyA, Body* bodyB)
 
 	return (distance <= radius);
 }
+
+void Collision::ResolveContacts(contacts_t& contacts)
+{
+	for (auto& contact : contacts)
+	{
+		// compute relative velocity
+		Vector2 rv = contact->bodyA->velocity - contact->bodyB->velocity; //<contact bodyA velocity - contact bodyB velocity>
+		// project relative velocity onto the contact normal
+		float nv = Vector2DotProduct(rv, contact->normal);//<dot product of rv and contact normal, use Vector2DotProduct>
+
+		// skip if bodies are separating
+		if (nv > 0) continue;
+
+		// compute impulse magnitude
+		float totalInverseMass = contact->bodyA->invMass + contact->bodyB->invMass; //<add contact bodyA inverse mass and contact bodyB inverse mass>
+		float impulseMagnitude = -(1 + contact->restitution) * nv / totalInverseMass;
+
+		// compute impulse vector
+		Vector2 impulse = contact->normal * impulseMagnitude; //<scale(multiply) contact normal with impulse magnitude>
+
+		// apply impulses to both bodies
+		contact->bodyA->ApplyForce(impulse, Body::ForceMode::Impulse);
+		contact->bodyB->ApplyForce(Vector2Invert(impulse), Body::ForceMode::Impulse);
+	}
+}
