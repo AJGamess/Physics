@@ -1,111 +1,78 @@
-# Raylib-Quickstart
-A simple cross platform template for setting up a project with the bleeding edge raylib code.
-Works with C or C++.
+# Physics Simulation
 
-## Supported Platforms
-Quickstart supports the main 3 desktop platforms:
-* Windows
-* Linux
-* MacOS
+This project, "Physics Simulation," offers a dynamic and interactive environment for exploring fundamental physics principles. Built with a focus on real-time visualization and user interaction, it allows for experimentation with various physical phenomena.
 
-# Naming projects
-Do not name your game project 'raylib', it will conflict with the raylib library.
+## Features
 
-# VSCode Users (all platforms)
-*Note* You must have a compiler toolchain installed in addition to vscode.
+* **Configurable Environment:** Adjust parameters like gravity, air resistance, and restitution to observe their impact on simulations.
+* **Interactive Object Manipulation:** Add, remove, and manipulate objects within the simulation, controlling their initial conditions and properties.
+* **Collision Detection and Response:** Experience realistic interactions between objects, including elastic and inelastic collisions.
+* **Performance Monitoring:** Keep an eye on simulation performance with real-time metrics.
 
-* Download the quickstart
-* Rename the folder to your game name
-* Open the folder in VSCode
-* Run the build task ( CTRL+SHIFT+B or F5 )
-* You are good to go
+## Getting Started
 
-# Windows Users
-There are two compiler toolchains available for windows, MinGW-W64 (a free compiler using GCC), and Microsoft Visual Studio
-## Using MinGW-W64
-* Double click the `build-MinGW-W64.bat` file
-* CD into the folder in your terminal
-* run `make`
-* You are good to go
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Note on MinGW-64 versions
-Make sure you have a modern version of MinGW-W64 (not mingw).
-The best place to get it is from the W64devkit from
-https://github.com/skeeto/w64devkit/releases
-or the version installed with the raylib installer
-#### If you have installed raylib from the installer
-Make sure you have added the path
+### Prerequisites
 
-`C:\raylib\w64devkit\bin`
+* **Raylib:** This project uses Raylib for graphics and input. Ensure you have Raylib set up for your development environment.
+* **C++ Compiler:** A C++11 compatible compiler (e.g., GCC, Clang, MSVC).
+* **CMake (Optional but Recommended):** For easier project configuration and building.
 
-To your path environment variable so that the compiler that came with raylib can be found.
+### Installation
 
-DO NOT INSTALL ANOTHER MinGW-W64 from another source such as msys2, you don't need it.
+1.  **Clone the repository:**
 
-## Microsoft Visual Studio
-* Run `build-VisualStudio2022.bat`
-* double click the `.sln` file that is generated
-* develop your game
-* you are good to go
+    ```bash
+    git clone [https://github.com/AJGamess/Physics.git](https://github.com/AJGamess/Physics.git)
+    cd Physics
+    ```
 
-# Linux Users
-* CD into the build folder
-* run `./premake5 gmake2`
-* CD back to the root
-* run `make`
-* you are good to go
+2.  **Build the project:**
 
-# MacOS Users
-* CD into the build folder
-* run `./premake5.osx gmake2`
-* CD back to the root
-* run `make`
-* you are good to go
+    * **Using CMake (Recommended for all platforms, including Visual Studio):**
+        ```bash
+        mkdir build
+        cd build
+        cmake .. 
+        # On Windows, this will generate Visual Studio solution and project files.
+        # On Linux/macOS, this typically generates Makefiles.
+        cmake --build .
+        # This command builds the project using the generated build system (e.g., MSBuild for Visual Studio, make for Makefiles).
+        ```
+    * **Manual Compilation (Example - adapt for your system and compiler):**
+        ```bash
+        g++ -o physics_simulation src/*.cpp -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+        ```
+        (Note: The exact compilation command may vary depending on your Raylib installation and operating system.)
 
-# Output files
-The built code will be in the bin dir
+### Usage
 
-# Working directories and the resources folder
-The example uses a utility function from `path_utils.h` that will find the resources dir and set it as the current working directory. This is very useful when starting out. If you wish to manage your own working directory you can simply remove the call to the function and the header.
+Once compiled, run the executable. If you built with Visual Studio, you can typically run it directly from the IDE or find the executable in the `build/Debug` or `build/Release` folder (depending on your build configuration).
 
-# Changing to C++
-Simply rename `src/main.c` to `src/main.cpp` and re-run the steps above and do a clean build.
+```bash
+./physics_simulation
 
-# Using your own code
-Simply remove `src/main.c` and replace it with your code, and re-run the steps above and do a clean build.
+![main simulation window](image-2.png)
 
-# Building for other OpenGL targets
-If you need to build for a different OpenGL version than the default (OpenGL 3.3) you can specify an OpenGL version in your premake command line. Just modify the bat file or add the following to your command line
+### Adding Objects:
 
-## For OpenGL 1.1
-`--graphics=opengl11`
+To add an object all you need to do is left click.
 
-## For OpenGL 2.1
-`--graphics=opengl21`
 
-## For OpenGL 4.3
-`--graphics=opengl43`
+![Screenshot showing object creation](image.png)
+### Manipulating Objects:
 
-## For OpenGLES 2.0
-`--graphics=opengles2`
+To connect object using a string, right click on the circle (to select it) and drag to a different circle to connect. 
 
-## For OpenGLES 3.0
-`--graphics=opengles3`
+![Screenshot of an object being manipulated](image-1.png)
 
-# License
-Copyright (c) 2020-2025 Jeffery Myers
+### Adjusting Parameters:
 
-This software is provided "as-is", without any express or implied warranty. In no event 
-will the authors be held liable for any damages arising from the use of this software.
+Using the UI you can adjust size, mass, gravity, gravitation and more.
+After adjusting click to add the circle, it will now have those properties.
+Then just press the space bar or click on simulate to start. Click again to freeze.
 
-Permission is granted to anyone to use this software for any purpose, including commercial 
-applications, and to alter it and redistribute it freely, subject to the following restrictions:
+![Screenshot of the UI showing parameter adjustments](image-3.png)
 
-  1. The origin of this software must not be misrepresented; you must not claim that you 
-  wrote the original software. If you use this software in a product, an acknowledgment 
-  in the product documentation would be appreciated but is not required.
-
-  2. Altered source versions must be plainly marked as such, and must not be misrepresented
-  as being the original software.
-
-  3. This notice may not be removed or altered from any source distribution.
+# I used Gemini for assisting me on generating this README.md for you guys.
