@@ -50,7 +50,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 Once compiled, run the executable. If you built with Visual Studio, you can typically run it directly from the IDE or find the executable in the `build/Debug` or `build/Release` folder (depending on your build configuration).
 
-```bash
 ./physics_simulation
 
 ![main simulation window](https://github.com/user-attachments/assets/be1b4083-1c09-4fbc-bd36-8547196a5c61)
@@ -78,5 +77,4 @@ Then just press the space bar or click on simulate to start. Click again to free
 
 ![Screenshot of the UI showing parameter adjustments](https://github.com/user-attachments/assets/586fe10e-cb04-4e6b-9a37-88a0aa098420)
 
-```
-# I used Gemini for assisting me on generating this README.md for you guys.
+## I used Gemini for assisting me on generating this README.md for you guys.
