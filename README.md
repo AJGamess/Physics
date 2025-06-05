@@ -50,22 +50,24 @@ These instructions will get you a copy of the project up and running on your loc
 
 Once compiled, run the executable. If you built with Visual Studio, you can typically run it directly from the IDE or find the executable in the `build/Debug` or `build/Release` folder (depending on your build configuration).
 
-```bash
 ./physics_simulation
 
-![main simulation window](image-2.png)
+![main simulation window](https://github.com/user-attachments/assets/be1b4083-1c09-4fbc-bd36-8547196a5c61)
+
 
 ### Adding Objects:
 
 To add an object all you need to do is left click.
 
 
-![Screenshot showing object creation](image.png)
+![Screenshot showing object creation](https://github.com/user-attachments/assets/75f3be30-0234-4731-8e42-18fa6b44fb2a)
 ### Manipulating Objects:
+
 
 To connect object using a string, right click on the circle (to select it) and drag to a different circle to connect. 
 
-![Screenshot of an object being manipulated](image-1.png)
+![Screenshot of an object being manipulated](https://github.com/user-attachments/assets/4d8104b0-cadf-427f-9cc8-7137bf948679)
+
 
 ### Adjusting Parameters:
 
@@ -73,6 +75,6 @@ Using the UI you can adjust size, mass, gravity, gravitation and more.
 After adjusting click to add the circle, it will now have those properties.
 Then just press the space bar or click on simulate to start. Click again to freeze.
 
-![Screenshot of the UI showing parameter adjustments](image-3.png)
+![Screenshot of the UI showing parameter adjustments](https://github.com/user-attachments/assets/586fe10e-cb04-4e6b-9a37-88a0aa098420)
 
-# I used Gemini for assisting me on generating this README.md for you guys.
+## I used Gemini for assisting me on generating this README.md for you guys.
