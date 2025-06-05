@@ -23,8 +23,6 @@ void Body::Draw(const Scene& scene)
 
 void Body::ApplyForce(const Vector2& force, ForceMode forceMode)
 {
-	this->force += force;
-
 	switch (forceMode)
 	{
 	case Body::ForceMode::Force:

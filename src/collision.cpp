@@ -15,9 +15,9 @@ void Collision::CreateContacts(const bodies_t& bodies, contacts_t& contacts)
 
 			if (Intersects(bodyA, bodyB))
 			{
-				Contact* contact = new Contact{};
-				contact->bodyA = bodyA;
-				contact->bodyB = bodyB;
+				Contact contact;
+				contact.bodyA = bodyA;
+				contact.bodyB = bodyB;
 
 				//<direction vector from bodyB to bodyA>;
 				Vector2 direction = bodyA->position - bodyB->position;
@@ -34,11 +34,11 @@ void Collision::CreateContacts(const bodies_t& bodies, contacts_t& contacts)
 				//get size of bodyA and bodyB
 				float radius = bodyA->size + bodyB->size;
 				//<calculate penetration depth, see note above>;
-				contact->depth = (radius - distance);
+				contact.depth = (radius - distance);
 				//<normalize direction, can use normalize function or direction / distance>;
-				contact->normal = direction / distance;
+				contact.normal = direction / distance;
 				//<get average restitution of both bodies>;
-				contact->restitution = (bodyA->restitution + bodyB->restitution) * 0.5f;
+				contact.restitution = (bodyA->restitution + bodyB->restitution) * 0.5f;
 
 				contacts.push_back(contact);
 			}
@@ -51,12 +51,12 @@ void Collision::SeparateContacts(contacts_t& contacts)
 	for (auto contact : contacts)
 	{
 		//<add inverse mass of both contact bodies>;
-		float totalInverseMass = (contact->bodyA->invMass + contact->bodyB->invMass);
-		Vector2 separation = contact->normal * (contact->depth / totalInverseMass);
+		float totalInverseMass = (contact.bodyA->invMass + contact.bodyB->invMass);
+		Vector2 separation = contact.normal * (contact.depth / totalInverseMass);
 		//<contact bodyA position + (separation * contact bodyA inverse mass)>;
-		contact->bodyA->position = contact->bodyA->position + (separation * contact->bodyA->invMass);
+		contact.bodyA->position = contact.bodyA->position + (separation * contact.bodyA->invMass);
 		//<contact bodyB position - (separation * contact bodyB inverse mass)>;
-		contact->bodyB->position = contact->bodyB->position - (separation * contact->bodyB->invMass);
+		contact.bodyB->position = contact.bodyB->position - (separation * contact.bodyB->invMass);
 	}
 }
 
@@ -75,22 +75,22 @@ void Collision::ResolveContacts(contacts_t& contacts)
 	for (auto& contact : contacts)
 	{
 		// compute relative velocity
-		Vector2 rv = contact->bodyA->velocity - contact->bodyB->velocity; //<contact bodyA velocity - contact bodyB velocity>
+		Vector2 rv = contact.bodyA->velocity - contact.bodyB->velocity; //<contact bodyA velocity - contact bodyB velocity>
 		// project relative velocity onto the contact normal
-		float nv = Vector2DotProduct(rv, contact->normal);//<dot product of rv and contact normal, use Vector2DotProduct>
+		float nv = Vector2DotProduct(rv, contact.normal);//<dot product of rv and contact normal, use Vector2DotProduct>
 
 		// skip if bodies are separating
 		if (nv > 0) continue;
 
 		// compute impulse magnitude
-		float totalInverseMass = contact->bodyA->invMass + contact->bodyB->invMass; //<add contact bodyA inverse mass and contact bodyB inverse mass>
-		float impulseMagnitude = -(1 + contact->restitution) * nv / totalInverseMass;
+		float totalInverseMass = contact.bodyA->invMass + contact.bodyB->invMass; //<add contact bodyA inverse mass and contact bodyB inverse mass>
+		float impulseMagnitude = -(1 + contact.restitution) * nv / totalInverseMass;
 
 		// compute impulse vector
-		Vector2 impulse = contact->normal * impulseMagnitude; //<scale(multiply) contact normal with impulse magnitude>
+		Vector2 impulse = contact.normal * impulseMagnitude; //<scale(multiply) contact normal with impulse magnitude>
 
 		// apply impulses to both bodies
-		contact->bodyA->ApplyForce(impulse, Body::ForceMode::Impulse);
-		contact->bodyB->ApplyForce(Vector2Invert(impulse), Body::ForceMode::Impulse);
+		contact.bodyA->ApplyForce(impulse, Body::ForceMode::Impulse);
+		contact.bodyB->ApplyForce(Vector2Negate(impulse), Body::ForceMode::Impulse);
 	}
 }

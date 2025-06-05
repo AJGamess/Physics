@@ -9,7 +9,7 @@ class Scene;
 
 using bodies_t = std::vector<Body*>;
 using springs_t = std::vector<Spring*>;
-using contacts_t = std::vector<Contact*>;
+using contacts_t = std::vector<Contact>;
 
 class World
 {

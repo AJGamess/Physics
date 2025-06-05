@@ -31,7 +31,7 @@ void SpringScene::Update()
 			Body::Type type = (Body::Type)GUI::bodyTypeActive;
 			Body* body = m_world->CreateBody(type, position, GUI::massValue, GUI::sizeValue, ColorFromHSV(randomf(360), 1, 1));
 
-			body->restitution = GUI::restitutionValue;
+			body->restitution = 0.2f; //GUI::restitutionValue;
 			body->gravityScale = GUI::gravityScaleValue;
 			body->damping = GUI::dampingValue;
 
@@ -65,7 +65,7 @@ void SpringScene::Update()
 			}
 		}
 	}
-
+	/*
 	//apply collison
 	for (auto body : m_world->GetBodies()) {
 		if (body->position.y < -5)
@@ -84,6 +84,7 @@ void SpringScene::Update()
 			body->velocity.x *= -body->restitution;
 		}
 	}
+	*/
 
 	for (auto body : m_world->GetBodies())
 	{

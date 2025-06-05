@@ -34,7 +34,7 @@ void World::Step(float timestep)
 
 	for (auto spring : m_springs)
 	{
-		spring->ApplyForce(springStiffnessMultiplier);
+		spring->ApplyForce(2.0f);
 	}
 
 	if (gravitation > 0) ApplyGravitation(m_bodies, gravitation);

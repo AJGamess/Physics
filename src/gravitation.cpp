@@ -19,7 +19,7 @@ void ApplyGravitation(bodies_t& bodies, float strength)
 
             // STEP 3: Clamp the distance to a minimum value to avoid extreme forces
             // distance = max(distance, 1);
-			distance = fmax(distance, 1.0f);
+			distance = fmaxf(distance, 1.0f);
 
             // STEP 4: Calculate gravitational force magnitude using:
             // forceMagnitude = (bodyA mass * bodyB mass / (distance * distance)) * strength;
